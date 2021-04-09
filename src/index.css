@@ -56,17 +56,20 @@ code {
 }
 
 .mb-1 {
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 }
 
 .mt-1 {
     margin-top: 5px;
 }
 
+.mt-2 {
+    margin-top: 10px!important;
+}
+
 .single-repo {
-    padding: 5px;
-    margin: 10px 0px;
-    padding: 20px 5px;
+    margin: 10px 0px!important;
+    padding: 10px 5px!important;
     border-left: 3px transparent solid;
 }
 

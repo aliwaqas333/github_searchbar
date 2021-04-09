@@ -1,16 +1,30 @@
-import { Box, Divider } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import { Box, CircularProgress } from "@material-ui/core";
+import React from "react";
 import SingleRepo from "./SingleRepo";
-import NoRepos from "./NoRepos"
+import NoRepos from "./NoRepos";
 type PropType = {
   repos: any;
   searchString: String;
+  fetching: boolean;
+  page: any;
 };
 function ListOfRepos(prop: PropType) {
-  let repositories = []
+  let repositories = [];
+  if (prop.fetching) {
+    return (
+      <Box
+        style={{ height: "70vh" }}
+        alignItems="center"
+        flex
+        justifyContent="center"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
   if (prop.repos.items) {
     repositories = prop.repos.items.map((item: any) => {
-      return <SingleRepo item={item}></SingleRepo>;
+      return <SingleRepo key={item.id} item={item}></SingleRepo>;
     });
   }
   return (
@@ -23,8 +37,8 @@ function ListOfRepos(prop: PropType) {
           </p>
         )}
       </Box>
-      {repositories.length && repositories}
-      {!repositories.length && <NoRepos/>}
+      {repositories.length ? repositories : <></>}
+      {!repositories.length && <NoRepos />}
     </Box>
   );
 }

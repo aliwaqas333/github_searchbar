@@ -1,16 +1,12 @@
-import React, { useEffect } from "react";
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-
+import React, { useEffect, useState } from "react";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import CustomizedInputBase from "./SearchInput";
+import Box from '@material-ui/core/Box';
 import {
-  Grid,
-  TextField,
-  Box,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
+  Grid
 } from "@material-ui/core";
-
+import SortButton from "./MenuButton";
+import fetchRepos from "./fetchRepos"
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
@@ -20,75 +16,45 @@ const useStyles = makeStyles((theme: Theme) =>
     selectEmpty: {
       marginTop: theme.spacing(2),
     },
-  }),
+    divider: {
+      height: 28,
+      margin: 4,
+    }
+  })
 );
 
-export default function SearchBar() {
-  const [age, setAge] = React.useState("");
-  const classes = useStyles();
+type PropType = {
+  setrepos: Function,
+  setSearchString: Function
+}
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setAge(event.target.value as string);
+export default function SearchBar(prop:PropType) {
+  const classes = useStyles();
+  // const sortButtons=[
+  //   {label: "Language", options:["JavaScript", "HTML", "CSS"]},
+  //   {label: "Language", options:["JavaScript", "HTML", "CSS"]},
+  //   {label: "Language", options:["JavaScript", "HTML", "CSS"]},
+  // ]
+  const handleChange = async (event: React.ChangeEvent<{ value: string }>) => {
+    const response = await fetchRepos(event.target.value); 
+    if(response.success){
+      console.log('reposList', response.data)
+      prop.setSearchString(event.target.value)
+      prop.setrepos(response.data);
+    }
   };
 
   return (
-    <Box m={2}>
-      <Grid container direction="row">
-        <Grid item xs={6}>
-          <TextField
-            fullWidth
-            id="outlined-basic"
-            label="Search git repos..."
-            variant="outlined"
-          />
+    <Box display="flex" justifyContent="flex-start" alignItems="center" className="bg-light p-1 mt-1">
+      
+        <Grid item xs={12}>
+          <CustomizedInputBase handleChange={handleChange} />
         </Grid>
-        <Grid item xs={2}>
-          <FormControl  className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Age</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={age}
-              onChange={handleChange}
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={2}>
-          <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Age</InputLabel>
-            <Select
-              fullWidth
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={age}
-              onChange={handleChange}
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={2}>
-          <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Age</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={age}
-              onChange={handleChange}
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
-    </Box>
-  );
+        {/* <Grid item >
+          <SortButton />
+        </Grid> */}
+        {/* <Divider className={classes.divider} orientation="vertical" /> */}
+     
+     </Box>
+  )
 }

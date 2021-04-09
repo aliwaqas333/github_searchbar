@@ -18,5 +18,59 @@ code {
 }
 
 .ml-1 {
-    margin-left: 5px;
+    margin-left: 5px!important;
+}
+
+.ml-2 {
+    margin-left: 10px!important
+}
+
+.ml-5 {
+    margin-left: 20px;
+}
+
+.repo-title {
+    font-size: 20px;
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.bg-light {
+    background-color: rgb(255, 255, 255);
+}
+
+.p-1 {
+    padding: 5px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.bg-gold {
+    background-color: gold;
+}
+
+.text-gold {
+    color: gold;
+}
+
+.mb-1 {
+    margin-bottom: 5px;
+}
+
+.mt-1 {
+    margin-top: 5px;
+}
+
+.single-repo {
+    padding: 5px;
+    margin: 10px 0px;
+    padding: 20px 5px;
+    border-left: 3px transparent solid;
+}
+
+.single-repo:hover {
+    /* box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15)!important; */
+    border-left: 3px gold solid;
 }

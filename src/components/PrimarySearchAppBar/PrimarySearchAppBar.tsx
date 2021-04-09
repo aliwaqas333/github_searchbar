@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function PrimarySearchAppBar() {
+export default function PrimaryAppBar() {
   const classes = useStyles();
   return (
     <div className={classes.grow}>

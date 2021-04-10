@@ -1,52 +1,110 @@
-import { Box, Divider, Grid, Link, Typography } from "@material-ui/core";
+import {
+  Box,
+  createStyles,
+  Divider,
+  Grid,
+  Link,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import React, { useEffect } from "react";
 import StarOutlineIcon from "@material-ui/icons/StarOutline";
 import ComputerIcon from "@material-ui/icons/Computer";
 import Avatar from "@material-ui/core/Avatar";
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    paper: {
+      height: 140,
+      width: 100,
+    },
+    control: {
+      padding: theme.spacing(2),
+    },
+  })
+);
 function SingleRepo(prop: any) {
+  const classes = useStyles();
   return (
     <>
-      <Grid container spacing={2} className="single-repo">
-        <Grid alignItems="flex-end" justify="flex-start">
+      <Grid container spacing={1} className="single-repo">
+        <Grid
+          container
+          className={classes.root}
+          justify="flex-start"
+          alignItems="flex-end"
+        >
           <Grid item>
             <Avatar alt="Remy Sharp" src={prop.item.owner.avatar_url} />
           </Grid>
           <Grid item>
-            <Typography className="ml-1" variant="body2">
-              <Link target="_blank" href={prop.item.owner.url}>
-                {prop.item.owner.login}
+            <Typography className="ml-1" variant="body1">
+              <Link target="_blank" href={prop.item.owner.html_url}>
+                @{prop.item.owner.login}
               </Link>
             </Typography>
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <Typography className="repo-title" variant="h5" component="h2">
-            <Link target="_blank" href={prop.item.url}>
+            <Link target="_blank" href={prop.item.html_url}>
               {prop.item.name}
             </Link>
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="body2">{prop.item.description}</Typography>
+          <Typography gutterBottom variant="body1">{prop.item.description}</Typography>
         </Grid>
         <Grid container spacing={2}>
-          <Grid item xs={6} sm={3} className="d-flex" alignItems="center">
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            item
+            xs={6}
+            sm={3}
+          >
             <ComputerIcon className="text-gold" />
             <span className="ml-1 mb-1">{prop.item.language}</span>
           </Grid>
 
-          <Grid item xs={6} sm={3} className="d-flex" alignItems="center">
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            item
+            xs={6}
+            sm={3}
+          >
             <StarOutlineIcon className="text-gold" />
             <span className="ml-1 mb-1">{prop.item.stargazers_count}</span>
           </Grid>
 
-          <Grid item xs={6} sm={3} alignContent="center">
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            item
+            xs={6}
+            sm={3}
+          >
             <span>{prop.item.forks} forks</span>
           </Grid>
 
-          <Grid item xs={6} sm={3}>
-            Published: {new Date(prop.item.pushed_at).toLocaleString("en-US")}
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            item
+            xs={6}
+            sm={3}
+          >
+            <Typography color="textSecondary" variant="body2">
+              Published: {new Date(prop.item.pushed_at).toLocaleString("en-US")}
+            </Typography>
           </Grid>
         </Grid>
       </Grid>

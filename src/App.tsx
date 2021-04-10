@@ -14,7 +14,7 @@ function App() {
     <Box>
       <PrimaryAppBar />
       <Container>
-        <Container maxWidth="md" className="bg-dark">
+        <Container maxWidth="md">
           <SearchBar
             setrepos={setrepos}
             setSearchString={setSearchString}

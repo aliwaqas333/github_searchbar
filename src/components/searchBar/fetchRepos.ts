@@ -14,10 +14,13 @@ export default async function fetchRepos(
   let success: boolean = true;
   try {
     const response = await Axios.get<IPost[]>(
-      `${apiURL}?q=${query}&&per_page=${per_page}&&page=${page}&&order=${order}&&accept={accept}`
+      `${apiURL}?q=${query}&&per_page=${per_page}&&page=${page}&&order=${order}&&accept=${accept}`
     );
+
+    console.log("response", response);
     return { success, data: response["data"] };
   } catch (error) {
     return { success: false };
   }
 }
+

@@ -2,11 +2,9 @@ import React from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
-import DirectionsIcon from "@material-ui/icons/Directions";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,9 +30,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type propType = {
   handleChange: Function;
+  setpage: Function;
 };
 
-export default function CustomizedInputBase(props: propType) {
+export default function CustomizedInputBase(prop: propType) {
   const classes = useStyles();
   const [text, settext] = React.useState("");
   return (
@@ -52,10 +51,10 @@ export default function CustomizedInputBase(props: propType) {
         type="submit"
         className={classes.iconButton}
         aria-label="search"
-        
         onClick={(event) => {
           event.preventDefault();
-          props.handleChange(text);
+          prop.handleChange(text); // call handle change for new api call with text as query
+          prop.setpage(1); // reset page number
         }}
       >
         <SearchIcon />

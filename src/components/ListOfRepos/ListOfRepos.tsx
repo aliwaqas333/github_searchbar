@@ -15,7 +15,7 @@ function ListOfRepos(prop: PropType) {
       <Box
         style={{ height: "70vh" }}
         alignItems="center"
-        flex
+        display="flex"
         justifyContent="center"
       >
         <CircularProgress />

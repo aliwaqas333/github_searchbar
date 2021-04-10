@@ -51,6 +51,7 @@ export default function SearchBar(prop: PropType) {
       prop.setrepos(response.data);
     }
     prop.setfetching(false);
+    
   };
 
   return (
@@ -62,10 +63,10 @@ export default function SearchBar(prop: PropType) {
         className="bg-light p-1 mt-1"
       >
         <Grid item xs={12}>
-          <CustomizedInputBase handleChange={handleChange} />
+          <CustomizedInputBase handleChange={handleChange} setpage={prop.setpage}/>
         </Grid>
       </Box>
-      {prop.repos.total_count > 10 && (
+      {prop.repos.total_count > 10 && prop.page*10 <=prop.repos.total_count  && (
         <Box display="flex" flexDirection="row" justifyContent="space-between">
           <Typography variant="body2">
             Current Page: {prop.page}, showing {prop.page * 10 - 10 + 1} to{" "}

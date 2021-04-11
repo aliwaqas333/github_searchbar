@@ -2,12 +2,18 @@ import { CircularProgress } from "@material-ui/core";
 import { Avatar, Grid, Link, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import fetchUser from "./fetchUser";
-import EmailIcon from '@material-ui/icons/Email';
 
 type propType = {
   setFetching: Function;
   fetching: Boolean;
 };
+
+// Returns users card UI
+/**
+ * @param {string}  setFetching
+ * @param {string=} setFetching
+ * @return {string} UI component of the user card.
+ */
 export default function UserCard(prop: propType) {
   const [user, setuser]: any = useState([]);
 

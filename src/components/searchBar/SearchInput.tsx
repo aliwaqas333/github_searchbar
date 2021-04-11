@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,10 +29,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type propType = {
-  setpage: Function;
   setSearchString:Function;
 };
 
+// Input component of search bar
+/**
+ * @param {Function}  setFetching - Function to change fetching state.
+ * @param {Boolean} setSearchString - An optional param (Closure syntax)
+ * @return {<Paper></Paper>} UI component
+ */
 export default function CustomizedInputBase(prop: propType) {
   const classes = useStyles();
   return (

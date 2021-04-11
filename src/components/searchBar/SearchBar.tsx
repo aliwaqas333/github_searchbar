@@ -1,55 +1,52 @@
-import React, { useEffect, useState } from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import React, { useEffect } from "react";
 import CustomizedInputBase from "./SearchInput";
 import Box from "@material-ui/core/Box";
 import { Grid, Typography } from "@material-ui/core";
 import fetchRepos from "./fetchRepos";
 import filterRepos from "./filterRepos";
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-    divider: {
-      height: 28,
-      margin: 4,
-    },
-  })
-);
 
 type PropType = {
   setrepos: Function;
   setSearchString: Function;
   setfetching: Function;
   page: number;
-  setpage: Function;
   repos: any;
   searchString: string;
-  setallRepos:Function;
-  allRepos:any;
+  setallRepos: Function;
+  allRepos: any;
 };
 
+// Parameters may be declared in a variety of syntactic forms
+/**
+ * @param {Function}  setrepos - set repositories which will update ui aswell
+ * @param {Function} setSearchString - filter string settting function
+ * @param {Function} setfetching - function to change fetching status
+ * @param {Page} page - Page number to fetch from github
+ * @param {String} searchString - An optional param with a default value
+ * @param {Function} setallRepos - main store, will be set only once
+ * @param {Object} allRepos - set of all repos
+ * @return {string} returns search bar UI component
+ */
 export default function SearchBar(prop: PropType) {
-  let allRepositories:any =[]
   const per_page: number = 100;
 
   useEffect(() => {
     getAllReposOfUser();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    // lets get all repos 
+    // lets get all repos
     prop.setrepos(filterRepos(prop.searchString, prop.allRepos));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prop.searchString]);
 
+  // React component that displays the search bar.
+  /**
+   * @return {<Box></Box>} displays the search bar.
+   */
   async function getAllReposOfUser() {
     const response = await fetchRepos(
-      prop.setrepos,
       1,
       per_page,
       "asc",
@@ -58,7 +55,6 @@ export default function SearchBar(prop: PropType) {
     );
     if (!response.success) prop.setrepos([]);
     if (response.success) {
-      allRepositories = response.data;
       prop.setrepos(response.data);
       prop.setallRepos(response.data);
     }
@@ -73,10 +69,7 @@ export default function SearchBar(prop: PropType) {
         className="bg-light p-1 mt-1"
       >
         <Grid item xs={12}>
-          <CustomizedInputBase
-            setpage={prop.setpage}
-            setSearchString={prop.setSearchString}
-          />
+          <CustomizedInputBase setSearchString={prop.setSearchString} />
         </Grid>
       </Box>
       <Box display="flex" flexDirection="row" justifyContent="space-between">

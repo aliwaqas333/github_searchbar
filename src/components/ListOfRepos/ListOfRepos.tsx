@@ -1,5 +1,5 @@
-import { Box, CircularProgress, Grid } from "@material-ui/core";
-import React, {useEffect} from "react";
+import React from "react";
+import { Box, CircularProgress } from "@material-ui/core";
 import SingleRepo from "./SingleRepo";
 import NoRepos from "./NoRepos";
 
@@ -7,9 +7,19 @@ type PropType = {
   repos: any;
   searchString: String;
   fetching: boolean;
-  page: any;
 };
+
+/**
+ * @typedef {object} PropType Props
+ * @param   {Array}  repos - Array of Repositories state.
+ * @param   {string} searchString - The filter string
+ * @param   {Boolean}  fetching - A boolean to indicate that repositories are being fetched
+ * @return {<Box>} JSX List of all repositories
+ */
 function ListOfRepos(prop: PropType) {
+  /**
+   * @type {string[]} JSX element to display the repos in DOM.
+   */
   let repositories = [];
   if (prop.fetching) {
     return (
@@ -38,8 +48,7 @@ function ListOfRepos(prop: PropType) {
           </p>
         )}
       </Box>
-      {repositories.length ? repositories : <></>}
-      {!repositories.length && <NoRepos />}
+      {repositories.length > 0 ? repositories : <NoRepos />}
     </Box>
   );
 }

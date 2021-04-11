@@ -1,33 +1,14 @@
-import {
-  Box,
-  createStyles,
-  Divider,
-  Grid,
-  Link,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
-import React, { useEffect } from "react";
+import { Divider, Grid, Link, Typography } from "@material-ui/core";
+import React from "react";
 import StarOutlineIcon from "@material-ui/icons/StarOutline";
 import ComputerIcon from "@material-ui/icons/Computer";
-import Avatar from "@material-ui/core/Avatar";
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      height: 140,
-      width: 100,
-    },
-    control: {
-      padding: theme.spacing(2),
-    },
-  })
-);
+/**
+ * @typedef {object} PropType Props
+ * @param   {Array}  singleRepositoryObject - An object containing required information for the single repository object
+ * @return {<Box>} JSX List of single repository
+ */
 function SingleRepo(prop: any) {
-  const classes = useStyles();
   return (
     <>
       <Grid container spacing={1} className="single-repo">
@@ -39,7 +20,9 @@ function SingleRepo(prop: any) {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography gutterBottom variant="body1">{prop.item.description}</Typography>
+          <Typography gutterBottom variant="body1">
+            {prop.item.description}
+          </Typography>
         </Grid>
         <Grid container spacing={2}>
           <Grid

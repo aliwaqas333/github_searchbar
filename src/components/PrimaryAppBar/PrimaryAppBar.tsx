@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+/**
+ * @return {<Box>} Top Appbar
+ */
 export default function PrimaryAppBar() {
   const classes = useStyles();
   return (

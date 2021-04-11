@@ -74,12 +74,7 @@ export default function SearchBar(prop: PropType) {
       </Box>
       <Box display="flex" flexDirection="row" justifyContent="space-between">
         <Typography variant="body2">
-          Current Page: {prop.page}, showing{" "}
-          {prop.page * per_page - per_page + 1} to{" "}
-          {prop.repos.length > per_page
-            ? prop.repos.length
-            : prop.page * per_page}{" "}
-          of {prop.repos.length}
+          Current Page: {prop.page}, showing 1 to {prop.repos.length} 
         </Typography>
       </Box>
     </>

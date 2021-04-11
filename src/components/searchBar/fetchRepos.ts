@@ -4,22 +4,24 @@ interface IPost {
   data: object;
 }
 export default async function fetchRepos(
-  query: string,
+  setrepos:Function,
   page: number = 1,
-  per_page: number = 10,
-  order: string = "desc",
-  accept: string = "application/vnd.github.v3+json"
+  per_page: number = 100,
+  direction: string = "desc",
+  sort = "fullname",
+  setfetching: Function
 ) {
-  const apiURL = "https://api.github.com/search/repositories";
+  const apiURL = "https://api.github.com/users";
   let success: boolean = true;
   try {
+    setfetching(true)
     const response = await Axios.get<IPost[]>(
-      `${apiURL}?q=${query}&&per_page=${per_page}&&page=${page}&&order=${order}&&accept=${accept}`
+      `${apiURL}/${process.env.REACT_APP_GIRHUB_LOGIN}/repos?type=owner&&per_page=${per_page}&&page=${page}&&direction=${direction}&&sort=${sort}&&accept=application/vnd.github.v3+json`
     );
-
-    console.log("response", response);
+    setfetching(false)
     return { success, data: response["data"] };
   } catch (error) {
+    setfetching(false)
     return { success: false };
   }
 }

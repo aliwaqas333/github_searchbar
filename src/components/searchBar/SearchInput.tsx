@@ -29,13 +29,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type propType = {
-  handleChange: Function;
   setpage: Function;
+  setSearchString:Function;
 };
 
 export default function CustomizedInputBase(prop: propType) {
   const classes = useStyles();
-  const [text, settext] = React.useState("");
   return (
     <Paper component="form" className={classes.root}>
       <IconButton className={classes.iconButton} aria-label="menu">
@@ -45,20 +44,8 @@ export default function CustomizedInputBase(prop: propType) {
         className={classes.input}
         placeholder="Search Github Repositories"
         inputProps={{ "aria-label": "search github repositries" }}
-        onChange={(event) => settext(event.target.value)}
+        onChange={(event) => prop.setSearchString(event.target.value)}
       />
-      <IconButton
-        type="submit"
-        className={classes.iconButton}
-        aria-label="search"
-        onClick={(event) => {
-          event.preventDefault();
-          prop.handleChange(text); // call handle change for new api call with text as query
-          prop.setpage(1); // reset page number
-        }}
-      >
-        <SearchIcon />
-      </IconButton>
     </Paper>
   );
 }

@@ -1,6 +1,7 @@
 {
     "name": "git-search-fun",
     "version": "0.1.0",
+    "homepage": "https://aliwaqas333.github.io/github_searchbar/",
     "private": true,
     "dependencies": {
         "@material-ui/core": "^4.11.3",

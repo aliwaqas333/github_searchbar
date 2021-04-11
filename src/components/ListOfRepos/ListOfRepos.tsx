@@ -1,7 +1,8 @@
-import { Box, CircularProgress } from "@material-ui/core";
-import React from "react";
+import { Box, CircularProgress, Grid } from "@material-ui/core";
+import React, {useEffect} from "react";
 import SingleRepo from "./SingleRepo";
 import NoRepos from "./NoRepos";
+
 type PropType = {
   repos: any;
   searchString: String;
@@ -22,8 +23,8 @@ function ListOfRepos(prop: PropType) {
       </Box>
     );
   }
-  if (prop.repos.items) {
-    repositories = prop.repos.items.map((item: any) => {
+  if (prop.repos.length > 0) {
+    repositories = prop.repos.map((item: any) => {
       return <SingleRepo key={item.id} item={item}></SingleRepo>;
     });
   }
@@ -32,7 +33,7 @@ function ListOfRepos(prop: PropType) {
       <Box>
         {prop.searchString && (
           <p>
-            <strong>{prop.repos.total_count}</strong> results for repositories
+            <strong>{prop.repos.length}</strong> results for repositories
             matching <strong>{prop.searchString}</strong>
           </p>
         )}

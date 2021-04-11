@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import CustomizedInputBase from "./SearchInput";
 import Box from "@material-ui/core/Box";
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import fetchRepos from "./fetchRepos";
+import filterRepos from "./filterRepos";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
@@ -28,31 +29,40 @@ type PropType = {
   setpage: Function;
   repos: any;
   searchString: string;
+  setallRepos:Function;
+  allRepos:any;
 };
 
 export default function SearchBar(prop: PropType) {
-  const classes = useStyles();
-  // const sortButtons=[
-  //   {label: "Language", options:["JavaScript", "HTML", "CSS"]},
-  //   {label: "Language", options:["JavaScript", "HTML", "CSS"]},
-  //   {label: "Language", options:["JavaScript", "HTML", "CSS"]},
-  // ]
-  const handleChange = async (query: string) => {
-    if (!query) {
-      return false;
-    }
+  let allRepositories:any =[]
+  const per_page: number = 100;
 
-    // show loading spinner
-    prop.setfetching(true);
-    const response = await fetchRepos(query, prop.page);
+  useEffect(() => {
+    getAllReposOfUser();
+  }, []);
+
+  useEffect(() => {
+    // lets get all repos 
+    prop.setrepos(filterRepos(prop.searchString, prop.allRepos));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prop.searchString]);
+
+  async function getAllReposOfUser() {
+    const response = await fetchRepos(
+      prop.setrepos,
+      1,
+      per_page,
+      "asc",
+      "full_name",
+      prop.setfetching
+    );
     if (!response.success) prop.setrepos([]);
     if (response.success) {
-      prop.setSearchString(query);
+      allRepositories = response.data;
       prop.setrepos(response.data);
+      prop.setallRepos(response.data);
     }
-    prop.setfetching(false);
-    
-  };
+  }
 
   return (
     <>
@@ -63,26 +73,22 @@ export default function SearchBar(prop: PropType) {
         className="bg-light p-1 mt-1"
       >
         <Grid item xs={12}>
-          <CustomizedInputBase handleChange={handleChange} setpage={prop.setpage}/>
+          <CustomizedInputBase
+            setpage={prop.setpage}
+            setSearchString={prop.setSearchString}
+          />
         </Grid>
       </Box>
-      {prop.repos.total_count > 10 && prop.page*10 <=prop.repos.total_count  && (
-        <Box display="flex" flexDirection="row" justifyContent="space-between">
-          <Typography variant="body2">
-            Current Page: {prop.page}, showing {prop.page * 10 - 10 + 1} to{" "}
-            {prop.page * 10} / {prop.repos.total_count}
-          </Typography>
-          <Button
-            onClick={(e) => {
-              prop.setpage(prop.page + 1);
-              handleChange(prop.searchString);
-            }}
-            color="primary"
-          >
-            Next page ({prop.page + 1})
-          </Button>
-        </Box>
-      )}
+      <Box display="flex" flexDirection="row" justifyContent="space-between">
+        <Typography variant="body2">
+          Current Page: {prop.page}, showing{" "}
+          {prop.page * per_page - per_page + 1} to{" "}
+          {prop.repos.length > per_page
+            ? prop.repos.length
+            : prop.page * per_page}{" "}
+          of {prop.repos.length}
+        </Typography>
+      </Box>
     </>
   );
 }

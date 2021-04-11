@@ -31,23 +31,6 @@ function SingleRepo(prop: any) {
   return (
     <>
       <Grid container spacing={1} className="single-repo">
-        <Grid
-          container
-          className={classes.root}
-          justify="flex-start"
-          alignItems="flex-end"
-        >
-          <Grid item>
-            <Avatar alt="Remy Sharp" src={prop.item.owner.avatar_url} />
-          </Grid>
-          <Grid item>
-            <Typography className="ml-1" variant="body1">
-              <Link target="_blank" href={prop.item.owner.html_url}>
-                @{prop.item.owner.login}
-              </Link>
-            </Typography>
-          </Grid>
-        </Grid>
         <Grid item xs={12}>
           <Typography className="repo-title" variant="h5" component="h2">
             <Link target="_blank" href={prop.item.html_url}>
